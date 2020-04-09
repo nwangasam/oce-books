@@ -3,7 +3,7 @@ import './Welcome.css';
 
 const welcome = (props) => (
     <div className="Welcome">
-        <h1>Please fill the form below to request for a book of your choice.</h1>
+        <p>Please fill the form below to request a book of your choice.</p>
     </div>
 );
 

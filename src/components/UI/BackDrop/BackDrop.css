@@ -1,0 +1,14 @@
+.BackDrop {
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+    background: rgba(0,0,0,.8);
+    top: 0;
+    height: 100vh;
+}
+
+@media (min-width: 500px) {
+    .BackDrop {
+        display: none;
+    }
+}

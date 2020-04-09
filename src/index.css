@@ -1,3 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  background: transparent;
+}
+
+html {
+  font-size: 62.5%;
+  font-weight: normal;
+}
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -5,9 +25,25 @@ body {
   background-color: #000;
   font-family: "Lato", sans-serif;
   color: #fff;
+
+  max-width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)),
+    url('./assets/book-bg.png');
+  background-position: 0 0;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+@media (min-width: 640px) {
+  body {
+    background-position: 0 0;
+  }
 }

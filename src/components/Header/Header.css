@@ -1,17 +1,23 @@
 .Header {
-    /* width: 100%; */
-    height: 56px;
-    background: rgba(0, 0, 0, 0.6);
-    line-height: 56px;
-    margin-bottom: 16px;
-    font-family: "Oswald", sans-serif;
-    position: sticky;
-    top: 20px;
-    left: 0;
     width: 100%;
-    box-sizing: content-box;
+    font-family: "Oswald", sans-serif;
+    padding: 1.2rem 0;
+    background: linear-gradient( rgba(0, 0, 0, 0.363) 30%, rgba(0, 0, 0, 0) 100%);
+    box-shadow: 0 1px 1px rgba(238, 238, 238, 0.2)
 }
 
-.Header h1 {
-    font-size: 28px;
+
+.HeaderInner {
+    padding: 0 1.6rem;
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
 }
+
+@media (max-width: 499px) {
+    .DesktopOnly {
+        display: none;
+    }
+}
+
+

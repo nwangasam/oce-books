@@ -1,0 +1,31 @@
+.SideDrawer {
+    background: #fff;
+    position: fixed;
+    max-width: 75%;
+    width: 250px;
+    height: 100vh;
+    left: 0;
+    z-index: 100;
+    padding: 1.4rem 1.8rem;
+    color: #000;
+    transform: translateX(-100%);
+    transition: all .3s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.Show {
+    transform: translateX(0);
+}
+
+.Footer {
+    position: absolute;
+    bottom: 1.8rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #808080;
+}
+
+@media (min-width: 500px) {
+    .SideDrawer {
+        display: none;
+    }
+}

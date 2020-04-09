@@ -1,0 +1,48 @@
+.ToggleButton {
+    height: 40px;
+    width: 40px;
+    padding: 8px 0;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-around;
+}
+
+.ToggleButton div {
+    display: block;
+    width: 80%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+}
+
+.ToggleButton div:first-child {
+    width: 40%;
+}
+
+.ToggleButtonCancel {
+    width: 4rem;
+    height: 4rem;
+    background: #fff;
+    line-height: 4rem;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #000;
+    font-weight: bold;
+    font-size: 2.4rem;
+    text-align: center;
+    position: fixed;
+    right: 1.4rem;
+    top: 1.4rem;
+    z-index: 1000;
+}
+
+@media (min-width: 500px) {
+    .ToggleButton {
+        display: none;
+    }
+    .ToggleButtonCancel {
+        display: none;
+    }
+}
