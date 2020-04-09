@@ -31,9 +31,8 @@ class RequestForm extends Component {
 
   render() {
     return (
-      <form
-        className='Form' 
-        action={`https://wa.me/2348075075032?text=Hello! I am *${this.state.fullname}*. I'm requesting for *${this.state.bookTitle}* by *${this.state.author}*`} method="POST">
+      <div
+        className='Form'>
         <h2>Personal Info</h2>
         <label>Name</label>
         <input
@@ -64,10 +63,10 @@ class RequestForm extends Component {
           <button
             disabled={!this.state.requestBook}
           >
-            REQUEST BOOK
+            <a href={`https://wa.me/2348075075032?text=Hello! I am *${this.state.fullname}*. I'm requesting for *${this.state.bookTitle}* by *${this.state.author}*`}>REQUEST BOOK</a>
           </button>
         </div>
-      </form>
+      </div>
     );
   }
 }

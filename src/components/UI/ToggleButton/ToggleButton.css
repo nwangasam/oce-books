@@ -22,10 +22,10 @@
 }
 
 .ToggleButtonCancel {
-    width: 4rem;
-    height: 4rem;
+    width: 4.8rem;
+    height: 4.8rem;
     background: #fff;
-    line-height: 4rem;
+    line-height: 4.8rem;
     border-radius: 50%;
     cursor: pointer;
     color: #000;

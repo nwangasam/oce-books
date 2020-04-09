@@ -16,8 +16,11 @@ const sideDrawer = (props) => {
             <ToggleButtonCancel show={props.show} clicked={props.close} />
             <div className={assignedClasses.join(' ')} onClick={props.close}>
                 <Logo color="#786053" />
-                <NavigationItems navTitle="Resources"/>
-                <footer className="Footer">OCE BOOKS Inc, {new Date().getFullYear()} &copy;</footer>
+                {/* <NavigationItems navTitle="Resources"/> */}
+                <footer className="Footer">
+                    <p className="TermsConditions"><strong>T &amp; C: </strong>A user can request only for one book per day.</p>
+                    <p className="Copyright">OCE BOOKS Inc, {new Date().getFullYear()} &copy;</p>
+                </footer>
             </div>
         </>
     )
