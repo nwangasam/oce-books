@@ -11,9 +11,9 @@ class RequestForm extends Component {
   };
 
   validateInput = (newState) => {
-      if (!newState.fullname === "" &&
-        !newState.bookTitle === "" &&
-        !newState.author === "") {
+      if (!newState.fullname == "" &&
+        !newState.bookTitle == "" &&
+        !newState.author == "") {
              this.setState({ requestBook: true })
         } else {
              this.setState({ requestBook: false })
@@ -22,16 +22,16 @@ class RequestForm extends Component {
 
 
   inputChangeHandler = (event) => {
-    const inputState = {...this.state}
+    const inputState = {...this.state};
     inputState[event.target.name] = event.target.value;
-    this.setState({...inputState})
+    this.setState({...inputState});
+    console.log({...inputState});
     this.validateInput(inputState);
   };
 
   render() {
     return (
       <form
-        onSubmit={(e) => e.target.reset()}
         className='Form' 
         action={`https://wa.me/2348075075032?text=Hello! I am *${this.state.fullname}*. I'm requesting for *${this.state.bookTitle}* by *${this.state.author}*`} method="POST">
         <h2>Personal Info</h2>
