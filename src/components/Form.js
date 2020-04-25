@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Typography from './Typography';
 import Input from './Input';
 import Button from './Button';
@@ -13,10 +14,7 @@ class Form extends Component {
         elementConfig: {
           id: 'name',
           className: 'InputElement',
-          placeholder:
-            this.props.page === 'support'
-              ? "What's the title of the book?"
-              : 'Fullname, business / nickname',
+          placeholder: 'Fullname, business/nick name',
         },
         isValid: false,
         validation: {
@@ -109,8 +107,11 @@ class Form extends Component {
           className: 'InputElement',
           options: [
             { value: null, displayValue: 'SELECT PAYMENT METHOD' },
-            { value: 'transfer', displayValue: 'BANK TRANSFER' },
-            { value: 'cardPayment', displayValue: 'CARD PAYMENT' },
+            { value: 'transfer', displayValue: 'Bank Transfer' },
+            {
+              value: 'cardPayment',
+              displayValue: 'Card Payment (coming soon!)',
+            },
           ],
         },
         isValid: false,
@@ -123,7 +124,6 @@ class Form extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props);
     let newFieldState = {};
     let updatedRequestForm = { ...this.state.requestForm };
 
@@ -181,6 +181,41 @@ class Form extends Component {
     return isValid;
   };
 
+  formSubmitHandler = (event) => {
+    event.preventDefault();
+    const {
+      name,
+      title,
+      author,
+      book,
+      source,
+      amount,
+      paymentMethod,
+    } = this.state.requestForm;
+
+    let requestText = '',
+        phoneNo = '2348075075032';
+
+    if (name && title && author)
+    requestText = encodeURIComponent(
+      `Hi! I'm *${name.value}*. I'm requesting for a book titled *${title.value}* by *${author.value}*`
+    );
+        
+    if (name && amount && paymentMethod)
+      requestText = encodeURIComponent(
+        `Hello!, I\'m *${name}*. I am donating a sum of *$${amount.value}* in support of OCE BOOKS`
+      );
+
+    if (name && title && author && source)
+      requestText = encodeURIComponent(
+        `Hello!, I'm *${name.value}*. I'm donating a book in support of OCE BOOKS, titled *${title.value}* written by *${author.value}*`
+      );
+
+    
+
+    window.location = `https://wa.me/${phoneNo}?text=${requestText}`;
+  };
+
   render() {
     let inputs = [];
     let updatedRequestForm = { ...this.state.requestForm };
@@ -202,84 +237,89 @@ class Form extends Component {
     ));
 
     const renderCashSupport = (pathname) => {
-      if (this.props.match.path === pathname) 
-      return (
-        <>
-        <div className='HeadingBox'>
-          <Typography type='h2' config={{ className: 'Heading' }}>
-            ENTER PAYMENT DETAILS
-          </Typography>
-          <span></span>
-        </div>
-        {updatedInputs[0]}
-        {updatedInputs[1]}
-        {updatedInputs[2]}
-      </>
-      )
-    }
+      if (this.props.match.path === pathname)
+        return (
+          <>
+            <div className='HeadingBox'>
+              <Typography type='h2' config={{ className: 'Heading' }}>
+                ENTER PAYMENT DETAILS
+              </Typography>
+              <span></span>
+            </div>
+            {updatedInputs[0]}
+            {updatedInputs[1]}
+            {updatedInputs[2]}
+          </>
+        );
+    };
 
     const renderBookSupport = (pathname) => {
-      if (this.props.match.path === pathname) 
-      return (
-        <>
-        <div className='HeadingBox'>
-          <Typography type='h2' config={{ className: 'Heading' }}>
-            PERSONAL INFO
-          </Typography>
-          <span></span>
-        </div>
-        {updatedInputs[0]}
+      if (this.props.match.path === pathname)
+        return (
+          <>
+            <p className='paragraph-1' style={{ margin: '1.6rem 0 -1.6rem' }}>
+              <Link className='Pill' to='/support/books'>
+                Check for Unavailable Books
+              </Link>
+            </p>
+            <div className='HeadingBox'>
+              <Typography type='h2' config={{ className: 'Heading' }}>
+                PERSONAL INFO
+              </Typography>
+              <span></span>
+            </div>
+            {updatedInputs[0]}
 
-        <div className='HeadingBox'>
-          <Typography type='h2' config={{ className: 'Heading' }}>
-            BOOK INFO
-          </Typography>
-          <span></span>
-        </div>
-        {updatedInputs[1]}
-        {updatedInputs[2]}
+            <div className='HeadingBox'>
+              <Typography type='h2' config={{ className: 'Heading' }}>
+                BOOK INFO
+              </Typography>
+              <span></span>
+            </div>
+            {updatedInputs[1]}
+            {updatedInputs[2]}
 
-        {updatedInputs[3] && (
-          <div className='HeadingBox'>
-            <Typography type='h2' config={{ className: 'Heading' }}>
-              UPLOAD BOOK
-            </Typography>
-            <span></span>
-          </div>
-        )}
-        {updatedInputs[3]}
-        {updatedInputs[4]}
-      </>
-      )
-    }
+            {updatedInputs[3] && (
+              <div className='HeadingBox'>
+                <Typography type='h2' config={{ className: 'Heading' }}>
+                  UPLOAD BOOK
+                </Typography>
+                <span></span>
+              </div>
+            )}
+            {updatedInputs[3]}
+            {updatedInputs[4]}
+          </>
+        );
+    };
 
     const renderRequestBook = (pathname) => {
       if (pathname === this.props.match.path)
-      return (
-        <>  
-        <div className='HeadingBox'>
-            <Typography type='h2' config={{ className: 'Heading' }}>
-              PERSONAL INFO
-            </Typography>
-            <span></span>
-          </div>
-          {updatedInputs[0]}
+        return (
+          <>
+            <div className='HeadingBox'>
+              <Typography type='h2' config={{ className: 'Heading' }}>
+                PERSONAL INFO
+              </Typography>
+              <span></span>
+            </div>
+            {updatedInputs[0]}
 
-          <div className='HeadingBox'>
-            <Typography type='h2' config={{ className: 'Heading' }}>
-              BOOK INFO
-            </Typography>
-            <span></span>
-          </div>
-          {updatedInputs[1]}
-          {updatedInputs[2]}
-      </>
-      )
-    }
+            <div className='HeadingBox'>
+              <Typography type='h2' config={{ className: 'Heading' }}>
+                BOOK INFO
+              </Typography>
+              <span></span>
+            </div>
+            {updatedInputs[1]}
+            {updatedInputs[2]}
+          </>
+        );
+    };
 
     return (
       <div className='Form'>
-        <form>
+        <form onSubmit={this.formSubmitHandler}>
           {renderRequestBook('/')}
           {renderBookSupport('/support/book')}
           {renderCashSupport('/support/cash')}
@@ -288,7 +328,7 @@ class Form extends Component {
             disabled={!this.state.isFormValid}
             className='ButtonLarge'
           >
-            REQUEST BOOK
+            SUBMIT
           </Button>
         </form>
       </div>

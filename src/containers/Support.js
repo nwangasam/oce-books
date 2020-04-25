@@ -5,21 +5,21 @@ import Typography from '../components/Typography';
 import AsyncComponent from '../hoc/asyncComponent';
 
 const AsyncForm = AsyncComponent(() => {
-  return import('../components/Form')
-})
+  return import('../components/Form');
+});
 
 class Support extends Component {
- 
   render() {
-    const supportBookFields = ["name", "title", "author", "book", "source"];
-    const supportCashFields = ["name", "amount", "paymentMethod"];
+    const supportBookFields = ['name', 'title', 'author', 'book', 'source'];
+    const supportCashFields = ['name', 'amount', 'paymentMethod'];
     return (
       <div className='Support'>
         <Typography type='h3' config={{ className: 'HeadingLarge' }}>
           Love to donate a book or cash?
         </Typography>
 
-        <div className='Tab'>
+        <div
+          className={this.props.history.location.pathname !== "/support" ? "Tab active" : "Tab"}>
           <NavLink to='/support/book' className='TabButton'>
             <Typography type='h2' config={{ className: 'Heading' }}>
               DONATE BOOK
@@ -32,8 +32,18 @@ class Support extends Component {
             </Typography>
           </NavLink>
         </div>
-        <Route path='/support/book' render={(props) => <AsyncForm {...props} page="support" fields={supportBookFields} />} />
-        <Route path='/support/cash' render={(props) => <AsyncForm {...props} page="support" fields={supportCashFields} />} />
+        <Route
+          path='/support/book'
+          render={(props) => (
+            <AsyncForm {...props} page='support' fields={supportBookFields} />
+          )}
+        />
+        <Route
+          path='/support/cash'
+          render={(props) => (
+            <AsyncForm {...props} page='support' fields={supportCashFields} />
+          )}
+        />
       </div>
     );
   }

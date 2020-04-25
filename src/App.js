@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Link, Switch } from 'react-router-dom';
 
 import './index.css';
@@ -11,20 +11,26 @@ import AsyncComponent from './hoc/asyncComponent';
 
 const AsyncSupport = AsyncComponent(() => {
   return import('./containers/Support');
-})
+});
 
 const AsynRequestBook = AsyncComponent(() => {
-  return import('./containers/RequestBook')
-})
-
+  return import('./containers/RequestBook');
+});
 
 function App(props) {
   return (
     <Layout>
       <Switch>
-        <Route path="/" exact render={(props) => <AsynRequestBook {...props} />} />
-        <Route path="/support" component={AsyncSupport} />
-        <Route path="/suggest" render={() => <h1>How would we suggest a book for you?</h1>} />
+        <Route path='/support' component={AsyncSupport} />
+        <Route
+          path='/suggest'
+          render={() => <h1>How would we suggest a book for you?</h1>}
+        />
+        <Route
+          path='/'
+          exact
+          render={(props) => <AsynRequestBook {...props} />}
+        />
       </Switch>
     </Layout>
   );
@@ -32,21 +38,37 @@ function App(props) {
 
 function Layout(props) {
   return (
-    <div className="Layout">
+    <div className='Layout'>
       <Header />
-        {props.children}
+      {props.children}
       <Footer />
     </div>
   );
 }
 
-function Header() {
+function Header(props) {
+  console.log(props, 'props from header');
   return (
     <header>
       <Logo />
-      <Link
-        to={'/support'}
-        className="Button">SUPPORT</Link>
+      <Switch>
+        <Route
+          path='/support'
+          render={() => (
+            <Link to={'/'} className='Button'>
+              REQUEST BOOK
+            </Link>
+          )}
+        />
+        <Route
+          path='/'
+          render={() => (
+            <Link to={'/support'} className='Button'>
+              SUPPORT
+            </Link>
+          )}
+        />
+      </Switch>
       <Menu />
     </header>
   );
@@ -55,14 +77,18 @@ function Header() {
 function Footer() {
   return (
     <footer>
-      <Typography type='p' config={{ className: "paragraph-1" }}>I'm not sure what book to read :(</Typography>
-      <Link 
-          to={{ pathname: '/suggest-book' }}
-          className="ButtonSmall">SUGGEST A BOOK FOR ME</Link>
+      <Route path="/" exact render={() => (
+        <>
+          <Typography type='p' config={{ className: 'paragraph-1' }}>
+            I'm not sure what book to read :(
+          </Typography>
+          <Link to={{ pathname: '/suggest-book' }} className='ButtonSmall'>
+            SUGGEST A BOOK FOR ME
+          </Link>
+        </>
+      )} />
     </footer>
-  )
+  );
 }
-
-
 
 export default App;
