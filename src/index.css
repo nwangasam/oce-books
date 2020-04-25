@@ -1,49 +1,479 @@
-* {
+:root {
+  --color-primary: #A56846;
+  --color-primary-light: rgba(#2B1A11, .4);
+  --color-dark: #3E3E3E;
+  --color-light: #FFF;
+  --color-light-1: rgba(255, 255, 255, .4);
+  --color-light-2: rgba(255, 255, 255, .7);
+  --bg-gradient: linear-gradient(rgba(36, 28, 24, .5),rgba(36, 28, 24, .5));
+  --border: 1px solid rgba(#FFF, .4);
+  --font-family: "Oswald", sans-serif;
+}
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  -webkit-font-smothing: antialiased;
+  font-size: 62.5%;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  font-family: var(--font-family);
+  background: var(--bg-gradient), url("./assets/img/oce-books.jpg") top center/cover;
+  background-blend-mode: multiply;
+  background-attachment: fixed;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 ul {
   list-style: none;
 }
 
-a {
-  text-decoration: none;
-  background: transparent;
+.container {
+  max-width: 500px;
+  margin: 4rem auto;
+  padding: .8rem;
 }
 
-html {
-  font-size: 62.5%;
-  font-weight: normal;
-}
-
-body {
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #000;
-  font-family: "Lato", sans-serif;
-  color: #fff;
-
-  max-width: 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)),
-    url('./assets/book-bg.png');
-  background-position: 0 0;
-  background-attachment: fixed;
-  background-size: cover;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-
-@media (min-width: 640px) {
+@media only screen and (min-width: 500px) {
   body {
-    background-position: 0 0;
+    background: none;
   }
 }
+
+.Logo {
+  display: inline-block;
+  color: var(--color-light);
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: .2rem;
+  text-transform: uppercase;
+}
+
+.Input {
+  position: relative;
+  width: 100%;
+  font-size: 1.5rem;
+  background: rgba(43, 26, 17, 0.4);
+}
+
+.Label {
+  position: absolute;
+  top: 28%;
+  left: 1.2rem;
+  font-size: 1.6rem;
+  color: rgba(255, 255, 255, .8);
+}
+
+.InputElement,
+.Select {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-size: inherit;
+  color: #fff;
+  background: transparent;
+  padding: 18px 12px 18px 70px;
+}
+
+.InputElement::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, .5);
+}
+
+.InputElement[type=file]::-webkit-file-upload-button {
+  opacity: 0;
+}
+
+.InputElement:focus {
+  outline: none;
+  color: #FFF;
+  background: #2B1A11;
+}
+
+.InputElement:invalid,
+.InputElement.invalid {
+  border: 1px solid #ff5845;
+  background: #fd998e;
+}
+
+.SelectBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(255, 255, 255, .8);
+}
+
+.SelectBox svg {
+  width: 20px;
+  height: 20px;
+  color: currentColor;
+  position: absolute;
+  right: 1.2rem;
+  pointer-events: none;
+}
+
+.Select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  
+  padding: 18px 12px 18px 1.2rem;
+  font-family: "Oswald", sans-serif;
+  font-size: 1.6rem;
+  color: currentColor;
+  background: url('./assets/icons/caret.svg') no-repeat 95px;
+}
+
+.Select option {
+  color: var(--color-dark);
+}
+
+.Button,
+.ButtonLarge,
+.ButtonSmall {
+  font-size: 1.2rem;
+  font-family: var(--font-family);
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: .1rem;
+  display: inline-block;
+  color: var(--color-light);
+  border: none;
+  outline: none;
+  background: var(--color-primary);
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
+}
+
+.Button:disabled,
+.ButtonLarge:disabled,
+.ButtonSmall:disabled {
+  cursor: not-allowed;
+  background: #CCC;
+  color: #9e9e9e;
+}
+
+.Button:hover, .Button:active,
+.ButtonLarge:hover,
+.ButtonLarge:active,
+.ButtonSmall:hover,
+.ButtonSmall:active {
+  -webkit-filter: brightness(1.15);
+          filter: brightness(1.15);
+}
+
+.ButtonSmall {
+  width: auto;
+  height: auto;
+  padding: 1em 2em;
+  background: var(--color-dark);
+}
+
+.Button {
+  height: 3.2rem;
+  width: 10.4rem;
+  line-height: 3.2rem;
+}
+
+.ButtonLarge {
+  font-size: 1.8rem;
+  font-weight: bold;
+  height: 5.2rem;
+  width: 100%;
+  line-height: 5.2rem;
+}
+
+.paragraph-1 {
+  font-size: 1.5rem;
+  font-weight: normal;
+  color: var(--color-light);
+  font-family: "PT Sans", "Oswald", sans-serif;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  color: var(--color-light);
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: var(--font-family);
+}
+
+.Heading, 
+.HeadingLarge {
+  text-shadow: 0 1px 2px var(--color-dark);
+}
+
+.HeadingLarge {
+  font-size: 2.4rem;
+  text-align: center;
+  font-weight: normal;
+  letter-spacing: 1.2px;
+}
+
+.Heading {
+  font-size: 1.8rem;
+  letter-spacing: .8px;
+  color: var(--color-light);
+}
+
+.Heading::after {
+  content: ".";
+  display: inline-block;
+  margin-left: 2px;
+  color: currentColor;
+  font-weight: bold;
+}
+
+.HeadingBox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.HeadingBox > span {
+  height: 1px;
+  margin-left: 1.2rem;
+  background: var(--color-light-1);
+}
+
+.HeadingBox > span {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.MenuIcon {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  /* padding: .4rem; */
+  width: 2.6rem;
+  height: 3.2rem;
+}
+
+.MenuIcon > div {
+  position: relative;
+  height: 2px;
+  width: 100%;
+  background: var(--color-light);
+}
+
+.MenuIcon > div::before,
+.MenuIcon > div::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+}
+
+.MenuIcon > div::before {
+  top: -7px;
+}
+
+.MenuIcon > div::after {
+  top: 7px;
+}
+
+.Tab {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--color-light);
+}
+
+.TabButton {
+  display: inline-block;
+  border: 1px solid var(--color-light);
+  border-bottom: none;
+  padding: .8em 1.6rem;
+  background: transparent;
+  opacity: .7;
+}
+
+.TabButton.active {
+  background: rgba(43, 26, 17, 0.4);
+  opacity: 1;
+  border: 2px solid var(--color-light);
+  border-bottom: none;
+}
+
+.TabButton > *::after {
+  display: none;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 4.0rem;
+  padding: 0 1.2rem;
+}
+
+header .Button {
+  margin-left: auto;
+}
+
+header .MenuIcon {
+  margin-left: 1.2rem;
+}
+
+.Layout .HeadingLarge {
+  padding: 2.8rem 1.8rem;
+}
+
+.Form {
+  padding: 0 1.2rem;
+}
+
+.Form .HeadingBox,
+.Form .Input {
+  margin-bottom: 1.6rem;
+}
+
+.Form .Input.mb-md {
+  margin-bottom: 3.2rem;
+}
+
+footer {
+  text-align: center;
+  padding: .8rem 1.2rem 2.4rem;
+}
+
+footer p {
+  margin: 1.2rem auto;
+}
+
+/*
+  ==========================
+  SUPPORT PAGE
+  ==========================
+*/
+
+.Support .HeadingLarge {
+  padding: 2.4rem 1.2rem;
+}
+
+.Support .Tab {
+  margin: 0 1.2rem;
+}
+
+.HeadingBox {
+  margin-top: 3.2rem;
+}
+
+/*
+    ====================
+    LOADING ICON STYLES
+    ====================
+*/
+
+.Spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, .5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Spinner > * {
+  transform: scale(.34);
+}
+
+
+@keyframes ldio-jporotjok6g {
+  0% { transform: rotate(0) }
+  100% { transform: rotate(360deg) }
+}
+.ldio-jporotjok6g div { box-sizing: border-box!important }
+.ldio-jporotjok6g > div {
+  position: absolute;
+  width: 144px;
+  height: 144px;
+  top: 28px;
+  left: 28px;
+  border-radius: 50%;
+  border: 16px solid #000;
+  border-color: #FFF transparent #FFF transparent;
+  animation: ldio-jporotjok6g 1s linear infinite;
+}
+.ldio-jporotjok6g > div:nth-child(2) { border-color: transparent }
+.ldio-jporotjok6g > div:nth-child(2) div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: rotate(45deg);
+}
+.ldio-jporotjok6g > div:nth-child(2) div:before, .ldio-jporotjok6g > div:nth-child(2) div:after { 
+  content: "";
+  display: block;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: -16px;
+  left: 48px;
+  background: #FFF;
+  border-radius: 50%;
+  box-shadow: 0 128px 0 0 #FFF;
+}
+.ldio-jporotjok6g > div:nth-child(2) div:after { 
+  left: -16px;
+  top: 48px;
+  box-shadow: 128px 0 0 0 #FFF;
+}
+.loadingio-spinner-dual-ring-15l9r6iwmb1 {
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  overflow: hidden;
+  background: transparent;
+}
+.ldio-jporotjok6g {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.ldio-jporotjok6g div { box-sizing: content-box; }
+/* generated by https://loading.io/ */
+
+
