@@ -63,7 +63,7 @@ ul {
 
 @media only screen and (min-width: 500px) {
   body {
-    background: none;
+    background: var(--color-primary);
   }
 }
 
@@ -406,8 +406,9 @@ footer {
   padding: .8rem 1.2rem 2.4rem;
 }
 
-footer p {
+footer p.paragraph-1 {
   margin: 1.2rem auto;
+  font-size: 1.8rem;
 }
 
 /*

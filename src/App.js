@@ -20,6 +20,10 @@ const AsynRequestBook = AsyncComponent(() => {
   return import('./containers/RequestBook');
 });
 
+const Error404 = AsyncComponent(() => {
+  return import('./containers/404');
+});
+
 function App(props) {
   return (
     <Layout>
@@ -34,6 +38,7 @@ function App(props) {
           exact
           render={(props) => <AsynRequestBook {...props} />}
         />
+        <Route path="*" render={props => <Error404 {...props} />} />
       </Switch>
     </Layout>
   );

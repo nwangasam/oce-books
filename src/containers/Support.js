@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, NavLink, Link } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 
 import Typography from '../components/Typography';
 import AsyncComponent from '../hoc/asyncComponent';
