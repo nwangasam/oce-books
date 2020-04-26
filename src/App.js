@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Route, Link, Switch } from 'react-router-dom';
-
 import './index.css';
 
 import Logo from './components/Logo';
@@ -13,6 +12,10 @@ const AsyncSupport = AsyncComponent(() => {
   return import('./containers/Support');
 });
 
+const AsyncSuggestBook = AsyncComponent(() => { 
+  return import ('./containers/SuggestBook')
+})
+
 const AsynRequestBook = AsyncComponent(() => {
   return import('./containers/RequestBook');
 });
@@ -23,8 +26,8 @@ function App(props) {
       <Switch>
         <Route path='/support' component={AsyncSupport} />
         <Route
-          path='/suggest'
-          render={() => <h1>How would we suggest a book for you?</h1>}
+          path='/suggest-book'
+          component={AsyncSuggestBook}
         />
         <Route
           path='/'
@@ -47,7 +50,6 @@ function Layout(props) {
 }
 
 function Header(props) {
-  console.log(props, 'props from header');
   return (
     <header>
       <Logo />

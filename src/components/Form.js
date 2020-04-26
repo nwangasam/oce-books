@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Typography from './Typography';
 import Input from './Input';
 import Button from './Button';
@@ -101,12 +100,12 @@ class Form extends Component {
       paymentMethod: {
         type: 'select',
         label: '',
-        value: '',
+        value: 'TRANSFER',
         elementConfig: {
           id: 'paymentMethod',
-          className: 'InputElement',
+          className: 'Select',
           options: [
-            { value: null, displayValue: 'SELECT PAYMENT METHOD' },
+            { value: '', displayValue: 'SELECT PAYMENT METHOD' },
             { value: 'transfer', displayValue: 'Bank Transfer' },
             {
               value: 'cardPayment',
@@ -138,7 +137,6 @@ class Form extends Component {
 
   inputChangedHandler = (event, id) => {
     const updatedRequestForm = { ...this.state.requestForm };
-    console.log(updatedRequestForm);
 
     const updatedInputElement = {
       ...updatedRequestForm[id],
@@ -157,6 +155,8 @@ class Form extends Component {
       isFormValid = updatedRequestForm[inputElement].isValid && isFormValid;
     }
 
+    console.log(updatedRequestForm, id);
+    
     this.setState({
       requestForm: updatedRequestForm,
       isFormValid: isFormValid,
@@ -183,6 +183,7 @@ class Form extends Component {
 
   formSubmitHandler = (event) => {
     event.preventDefault();
+
     const {
       name,
       title,
@@ -194,24 +195,27 @@ class Form extends Component {
     } = this.state.requestForm;
 
     let requestText = '',
-        phoneNo = '2348075075032';
+      phoneNo = '2348075075032';
 
-    if (name && title && author)
-    requestText = encodeURIComponent(
-      `Hi! I'm *${name.value}*. I'm requesting for a book titled *${title.value}* by *${author.value}*`
-    );
-        
-    if (name && amount && paymentMethod)
+    if (name)
       requestText = encodeURIComponent(
-        `Hello!, I\'m *${name}*. I am donating a sum of *$${amount.value}* in support of OCE BOOKS`
+        `Hi! I'm *${name.value}*. I'm not sure what book to request for at the moment. Please suggest a book for me.`
       );
 
-    if (name && title && author && source)
+    if (name && title && author)
+      requestText = encodeURIComponent(
+        `Hi! I'm *${name.value}*. I'm requesting for a book titled *${title.value}* by *${author.value}*`
+      );
+
+    if (name && title && author && (source || book))
       requestText = encodeURIComponent(
         `Hello!, I'm *${name.value}*. I'm donating a book in support of OCE BOOKS, titled *${title.value}* written by *${author.value}*`
       );
 
-    
+    if (name && amount && paymentMethod)
+      requestText = encodeURIComponent(
+        `Hello!, I\'m *${name}*. I am donating a sum of *$${amount.value}* in support of OCE BOOKS`
+      );
 
     window.location = `https://wa.me/${phoneNo}?text=${requestText}`;
   };
@@ -225,9 +229,8 @@ class Form extends Component {
       });
     }
 
-    const updatedInputs = inputs.map((input) => (
+    const updatedInputs = inputs.map((input, i) => (
       <Input
-        key={input.elementConfig.id}
         type={input.type}
         label={input.label}
         value={input.value}
@@ -235,6 +238,10 @@ class Form extends Component {
         onChange={(event) => this.inputChangedHandler(event, event.target.id)}
       />
     ));
+
+    const renderSuggestBook = (pathname) => {
+      if (this.props.match.path === pathname) return <>{updatedInputs[0]}</>;
+    };
 
     const renderCashSupport = (pathname) => {
       if (this.props.match.path === pathname)
@@ -257,11 +264,6 @@ class Form extends Component {
       if (this.props.match.path === pathname)
         return (
           <>
-            <p className='paragraph-1' style={{ margin: '1.6rem 0 -1.6rem' }}>
-              <Link className='Pill' to='/support/books'>
-                Check for Unavailable Books
-              </Link>
-            </p>
             <div className='HeadingBox'>
               <Typography type='h2' config={{ className: 'Heading' }}>
                 PERSONAL INFO
@@ -321,6 +323,7 @@ class Form extends Component {
       <div className='Form'>
         <form onSubmit={this.formSubmitHandler}>
           {renderRequestBook('/')}
+          {renderSuggestBook('/suggest-book')}
           {renderBookSupport('/support/book')}
           {renderCashSupport('/support/cash')}
           <Button
