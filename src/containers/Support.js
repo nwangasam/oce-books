@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, NavLink } from 'react-router-dom';
+import { Route, NavLink, Link } from 'react-router-dom';
 
 import Typography from '../components/Typography';
 import AsyncComponent from '../hoc/asyncComponent';
@@ -18,11 +18,11 @@ class Support extends Component {
           Love to donate a book or cash?
         </Typography>
 
-        {/* <p className='paragraph-1' style={{ margin: '1.6rem 0 -1.6rem' }}>
-          <Link className='Pill' to='/support/books'>
-            Check for Unavailable Books
-          </Link>
-        </p> */}
+          <Route path="/support" exact>
+            <Link className='ButtonSmall bg-yellow' to='/check-books'>
+              Check for Unavailable Books
+            </Link>
+          </Route>
 
         <div
           className={

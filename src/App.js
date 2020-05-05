@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Link, Switch } from 'react-router-dom';
 import './index.css';
 
@@ -7,6 +7,8 @@ import Menu from './components/Menu';
 import Typography from './components/Typography';
 
 import AsyncComponent from './hoc/asyncComponent';
+
+import CheckBooks from './containers/CheckBooks';
 
 const AsyncSupport = AsyncComponent(() => {
   return import('./containers/Support');
@@ -28,6 +30,7 @@ function App(props) {
   return (
     <Layout>
       <Switch>
+        <Route path='/check-books' component={CheckBooks}  />
         <Route path='/support' component={AsyncSupport} />
         <Route
           path='/suggest-book'

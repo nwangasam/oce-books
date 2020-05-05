@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+
+import rp from 'request-promise';
+import $ from 'cheerio';
+
 import Typography from './Typography';
 import Input from './Input';
 import Button from './Button';
@@ -20,6 +24,7 @@ class Form extends Component {
           required: true,
           maxLength: 40,
         },
+        touched: false,
       },
       title: {
         type: 'text',
@@ -37,6 +42,7 @@ class Form extends Component {
         validation: {
           required: true,
         },
+        touched: false,
       },
       author: {
         type: 'text',
@@ -54,6 +60,7 @@ class Form extends Component {
         validation: {
           required: true,
         },
+        touched: false,
       },
       book: {
         type: 'file',
@@ -68,6 +75,7 @@ class Form extends Component {
         validation: {
           required: true,
         },
+        touched: false,
       },
       source: {
         type: 'url',
@@ -82,6 +90,7 @@ class Form extends Component {
         validation: {
           required: true,
         },
+        touched: false,
       },
       amount: {
         type: 'number',
@@ -100,7 +109,7 @@ class Form extends Component {
       paymentMethod: {
         type: 'select',
         label: '',
-        value: 'TRANSFER',
+        value: '',
         elementConfig: {
           id: 'paymentMethod',
           className: 'Select',
@@ -118,8 +127,11 @@ class Form extends Component {
           required: true,
         },
       },
+      touched: false,
     },
     isFormValid: false,
+    filteredSuggestions: [],
+    showSuggestions: false,
   };
 
   componentDidMount() {
@@ -135,8 +147,54 @@ class Form extends Component {
     this.setState({ requestForm: updatedRequestForm });
   }
 
+  getBook = (url) => {
+    rp(url)
+      .then((html) => {
+        const allBooks = [];
+
+        $('.resItemBox', html).each((i, el) => {
+          const book = $('[itemprop=name]', el).text().trim();
+          const author = $('.authors', el).text();
+          const imageUrl = $('img', el).data('src');
+          const publisher = $('[title=Publisher] > a', el).text();
+          const yearPublished = $('.property_year .property_value', el).text();
+          const file = $('.property__file .property_value', el).text();
+
+          allBooks.push({
+            book,
+            author,
+            imageUrl,
+            publisher,
+            yearPublished,
+            file,
+          });
+        });
+
+        this.setState({ filteredSpuggestions: allBooks, showSuggestions: true });
+      })
+      .catch((err) => {
+        //handle error
+        console.log(err);
+        this.setState({ filteredSuggestions: [], showSuggestions: false });
+      });
+  };
+
+  checkAvailableBooks = (query) => {
+    const url = encodeURI(
+      `https://cors-anywhere.herokuapp.com/https://b-ok.cc/s/${query}`
+    );
+    if (query.length % 2 === 0) {
+      console.log(query.length);
+      this.getBook(url);
+    }
+  };
+
   inputChangedHandler = (event, id) => {
     const updatedRequestForm = { ...this.state.requestForm };
+
+    if (this.props.checkbooks) {
+      this.checkAvailableBooks(event.currentTarget.value);
+    }
 
     const updatedInputElement = {
       ...updatedRequestForm[id],
@@ -148,6 +206,7 @@ class Form extends Component {
     );
 
     updatedInputElement.isValid = isValid;
+    updatedInputElement.touched = true;
     updatedRequestForm[id] = updatedInputElement;
 
     let isFormValid = true;
@@ -155,11 +214,10 @@ class Form extends Component {
       isFormValid = updatedRequestForm[inputElement].isValid && isFormValid;
     }
 
-    console.log(updatedRequestForm, id);
-    
     this.setState({
       requestForm: updatedRequestForm,
       isFormValid: isFormValid,
+      showSuggestions: true,
     });
   };
 
@@ -214,7 +272,7 @@ class Form extends Component {
 
     if (name && amount && paymentMethod)
       requestText = encodeURIComponent(
-        `Hello!, I\'m *${name}*. I am donating a sum of *$${amount.value}* in support of OCE BOOKS`
+        `Hello!, I\'m *${name.value}*. I am donating a sum of *$${amount.value}* in support of OCE BOOKS`
       );
 
     window.location = `https://wa.me/${phoneNo}?text=${requestText}`;
@@ -229,15 +287,18 @@ class Form extends Component {
       });
     }
 
-    const updatedInputs = inputs.map((input, i) => (
-      <Input
-        type={input.type}
-        label={input.label}
-        value={input.value}
-        elementConfig={input.elementConfig}
-        onChange={(event) => this.inputChangedHandler(event, event.target.id)}
-      />
-    ));
+    const updatedInputs = inputs.map((input, i) => {
+      return (
+        <Input
+          type={input.type}
+          label={input.label}
+          value={input.value}
+          elementConfig={input.elementConfig}
+          invalid={!input.isValid && input.touched}
+          onChange={(event) => this.inputChangedHandler(event, event.target.id)}
+        />
+      );
+    });
 
     const renderSuggestBook = (pathname) => {
       if (this.props.match.path === pathname) return <>{updatedInputs[0]}</>;
@@ -319,6 +380,27 @@ class Form extends Component {
         );
     };
 
+    const renderCheckBooks = (pathname) => {
+      if (pathname === this.props.match.path) {
+        return updatedInputs[0];
+      }
+    };
+
+    let suggestionsListComponent;
+    console.log(this.state.filteredSuggestions);
+
+    if (this.state.filteredSuggestions.length > 0) {
+      suggestionsListComponent = this.state.filteredSuggestions.map(
+        (suggestion, i) => {
+          return (
+            <li key={suggestion + i}>
+              {suggestion.book} by {suggestion.author}
+            </li>
+          );
+        }
+      );
+    }
+
     return (
       <div className='Form'>
         <form onSubmit={this.formSubmitHandler}>
@@ -326,6 +408,14 @@ class Form extends Component {
           {renderSuggestBook('/suggest-book')}
           {renderBookSupport('/support/book')}
           {renderCashSupport('/support/cash')}
+
+          <div className='Suggestion'>
+            {renderCheckBooks('/check-books')}
+            {this.props.checkbooks && this.state.filteredSuggestions.length > 0 &&
+              this.state.showSuggestions && (
+                <ul className='Suggestions'>{suggestionsListComponent}</ul>
+              )}
+          </div>
           <Button
             submit
             disabled={!this.state.isFormValid}

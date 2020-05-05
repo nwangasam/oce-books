@@ -1,12 +1,16 @@
 import React from 'react';
 import { ReactComponent as CaretIcon } from '../assets/icons/caret.svg';
-import { CSSTransition } from 'react-transition-group';
 
 const input = (props) => {
   let inputElement = null;
+  let inputClasses = [props.type === "select" ? "Select" : "InputElement"];
+  
+  if (props.invalid) {
+    inputClasses.push("invalid");
+  } 
+  props.elementConfig.className = inputClasses.join(' ')
 
   inputElement = (
-    
       <input
         onChange={props.onChange}
         type={props.type}

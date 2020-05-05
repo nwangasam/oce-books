@@ -119,10 +119,11 @@ ul {
   background: #2B1A11;
 }
 
+.Select.invalid,
 .InputElement:invalid,
 .InputElement.invalid {
-  border: 1px solid #ff5845;
-  background: #fd998e;
+  border: 1px solid #ff3e29;
+  background: #fb5943;
 }
 
 .SelectBox {
@@ -151,6 +152,7 @@ ul {
   font-family: "Oswald", sans-serif;
   font-size: 1.6rem;
   color: currentColor;
+  text-align: left;
 }
 
 .Select option {
@@ -211,6 +213,11 @@ ul {
   height: 5.2rem;
   width: 100%;
   line-height: 5.2rem;
+}
+
+.bg-yellow {
+  background: goldenrod;
+  color: #000;
 }
 
 .paragraph-1 {
@@ -341,6 +348,7 @@ h1, h2, h3 {
 
 .Tab .TabButton {
   border: 1px solid var(--color-light);
+  box-shadow: 0 3px 8px rgba(0,0,0,.3)
 }
 
 .Tab.active .TabButton {
@@ -425,10 +433,54 @@ footer p.paragraph-1 {
   margin: 0 1.2rem;
 }
 
+.Support .ButtonSmall {
+  display: block;
+  max-width: 240px;
+  margin: 2rem auto -2rem;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,.4);
+}
+
 .HeadingBox {
   margin-top: 3.2rem;
 }
 
+
+
+/*
+  ==========================
+  CHECKBOOKS PAGE
+  ==========================
+*/
+
+.CheckBooks .HeadingLarge {
+  margin-bottom: 2rem;
+}
+
+.Suggestion {
+  position: relative;
+}
+
+.Suggestions {
+  position: absolute;
+  top: 110%;
+  background: rgba(44, 27, 18, 0.95);
+  border: 1px solid rgba(225, 225, 225,.4);
+  color: #FFF;  
+
+  font-size: 1.3rem;
+  width: 100%;
+  padding: .4rem 0;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.Suggestions li {
+  font-weight: 100;
+  position: relative;
+  padding: 1.2rem;
+  letter-spacing: .8px;
+}
 /*
     ====================
     LOADING ICON STYLES
